@@ -19,8 +19,8 @@ public class fileManager {
         fileReader.close();
         return data.toString();
     }
-    public void writeFile(String name,String data) throws IOException {
-        FileWriter fileWriter = new FileWriter(name);
+    public void writeFile(String path,String data) throws IOException {
+        FileWriter fileWriter = new FileWriter(path);
         fileWriter.append(data);
         fileWriter.flush();
         fileWriter.close();

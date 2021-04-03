@@ -26,6 +26,7 @@ class ClientConnectionHandler extends Thread {
             System.out.println("received input: "+input);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error: "+e);
         }
 
         if(input.split(" ").length!=1){
@@ -42,6 +43,10 @@ class ClientConnectionHandler extends Thread {
                 end = serverAction(command, argument);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                System.err.println("Error: "+e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Error: "+e);
             }
         }
         try {
@@ -51,7 +56,7 @@ class ClientConnectionHandler extends Thread {
         }
     }
 
-    private boolean serverAction(String command, String argument) throws FileNotFoundException {
+    private boolean serverAction(String command, String argument) throws IOException {
         fileManager fm = new fileManager();
         if (command.equals("DIR")) {
             System.out.println("DIR command received");
@@ -65,8 +70,10 @@ class ClientConnectionHandler extends Thread {
             out.println(data);
             System.out.println("content of file: " + data);
         } else if (command.equals("UPLOAD")) {
-
-            System.out.println("UPLOAD file " + argument);
+            System.out.println("UPLOAD command received " + argument);
+            String fileName = argument.split(" ")[0];
+            String content = argument.split(" ")[1];
+            fm.writeFile(directory+"/"+fileName,content);
         }
         System.out.println("Thread end");
         return true;

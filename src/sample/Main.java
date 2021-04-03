@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class Main extends Application {
     String path ="local_Shared/";
     int port = 16789;
+    ListView<String> list;
     @Override
     public void start(Stage primaryStage) {
         //loading resources
@@ -50,28 +51,50 @@ public class Main extends Application {
         upload.setGraphic(up);
         Button download = new Button("Download");
         download.setGraphic(down);
-        Button browse = new Button("Browse");
-        browse.setGraphic(browser_white);
+        Button view = new Button("View");
+        view.setGraphic(file);
 
         //TreeView
         System.out.println("updating TreeView");
         TreeItem<String> root = updateTree(args.get(0));
         TreeView<String> tree = new TreeView<>(root);
-        System.out.println("TreeView updated");
+
         //ListView
-        ListView<String> list = new ListView<>();
+        list = new ListView<>();
+        updateList();
 
         //TextArea
         TextArea textArea = new TextArea();
 
         //Button action
-        String filename="";
+
         upload.setOnAction(actionEvent -> {
-            try {
-                client(args.get(0),port,"UPLOAD "+filename);
-            }catch (Exception e){
-                System.out.println("Error while uploading");
-                System.out.println(e);
+            String fileName= list.getSelectionModel().getSelectedItem();
+            boolean exist = false;
+            for(TreeItem<String> sub:root.getChildren()){
+                if(sub.getValue().equals(fileName)){
+                    exist=true;
+                }
+            }
+            if(exist){
+                System.err.println("file already exist");
+            }
+            else {
+                String content="";
+                fileManager fm = new fileManager();
+                File target = fm.findFile(fileName,new File(path));
+                try {
+                    content = fm.readFile(target.getAbsolutePath());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    client(args.get(0),port,"UPLOAD "+fileName+" "+content);
+                }catch (Exception e){
+                    System.out.println("Error while uploading");
+                    System.err.println(e);
+                }
+                root.getChildren().add(new TreeItem<>(fileName));
             }
 
         });
@@ -80,7 +103,7 @@ public class Main extends Application {
             if(!list.getItems().contains(selected)){
                 List<String> data = client(args.get(0),port,"DOWNLOAD "+selected);
                 if(data!=null){
-                    list.getItems().add(selected);
+                    updateList();
                     fileManager fm = new fileManager();
                     try {
                         fm.writeFile(path+selected, data.toString());
@@ -96,9 +119,26 @@ public class Main extends Application {
             else { System.out.println("Already exists"); }
 
         });
+        view.setOnAction(actionEvent -> {
+            String selected = list.getSelectionModel().getSelectedItem();
+            if(selected!=null){
+                String content="";
+                fileManager fm = new fileManager();
+                File target = fm.findFile(selected,new File(path));
+                try {
+                    content = fm.readFile(target.getAbsolutePath());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                textArea.setText(content);
+            }
+            else if(tree.getSelectionModel().getSelectedItem().getValue()!=null){
+                System.err.println("Error: can only view file in local folder");
+            }
+        });
 
         //Scene config
-        hbox.getChildren().addAll(upload,download,browse);
+        hbox.getChildren().addAll(upload,download,view);
         border.setTop(hbox);
         border.setLeft(tree);
         border.setRight(list);
@@ -119,7 +159,7 @@ public class Main extends Application {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter( socket.getOutputStream(),true);
             out.println(arg);
-            System.out.println("outputting to server" + arg);
+            System.out.println("sending " + arg + " command to server");
         }catch (IOException e) {
             System.out.println(
                     "IOEXception while opening a read/write connection");
@@ -141,7 +181,7 @@ public class Main extends Application {
                 out.println("UPLOAD");
                 out.println(filename);
                 fileManager fm = new fileManager();
-                fm.readFile(path+"/"+filename);
+                String content = fm.readFile(path+"/"+filename);
                 out.println(fm);
                 return null;
             }
@@ -164,6 +204,17 @@ public class Main extends Application {
             System.out.println("An error occurred while reading data from the server.");
             System.out.println("Error: " + e);
             return null;
+        }
+    }
+    private void updateList(){
+        fileManager fm = new fileManager();
+        String data = fm.getFileList(new File(path));
+
+        String[] temp =
+                data.split(" ");
+
+        for(String str : temp){
+            list.getItems().add(str);
         }
     }
     private TreeItem<String> updateTree(String ip){
