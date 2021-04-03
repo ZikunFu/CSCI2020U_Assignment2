@@ -4,9 +4,9 @@ import java.io.*;
 import java.net.Socket;
 
 class ClientConnectionHandler extends Thread {
-    Socket clientSocket = null;
-    BufferedReader in = null;
-    PrintWriter out = null;
+    Socket clientSocket;
+    BufferedReader in;
+    PrintWriter out;
     File directory;
 
     public ClientConnectionHandler(Socket socket, File dir) throws IOException {
@@ -15,7 +15,6 @@ class ClientConnectionHandler extends Thread {
         directory = dir;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
     }
 
     public void run() {
@@ -35,7 +34,7 @@ class ClientConnectionHandler extends Thread {
         }
         else{
             command= input.split(" ", 2)[0];
-            argument=null;
+            argument = null;
         }
         boolean end = false;
         while (!end) {

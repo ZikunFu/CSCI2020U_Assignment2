@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class fileManager {
     fileManager(){}
 
-    static public String readFile(String path) throws FileNotFoundException {
+    public String readFile(String path) throws FileNotFoundException {
         File file = new File(path);
         Scanner fileReader = new Scanner(file);
         StringBuilder data = new StringBuilder();
@@ -27,19 +27,14 @@ public class fileManager {
     }
     public File findFile(String fileName, File dir){
         for (File file : dir.listFiles()) {
-            if(file.getName().equals(fileName)){
-                return file;
-            }
+            if(file.getName().equals(fileName)){ return file; }
         }
         return null;
     }
     public String getFileList(File dir){
         String temp="";
         for (File file : dir.listFiles()) {
-            if(file.isFile()){
-                temp+=file.getName()+" ";
-            }
-
+            if(file.isFile()){ temp+=file.getName()+" "; }
         }
 
         for (File file : dir.listFiles()) {
@@ -50,7 +45,6 @@ public class fileManager {
                 }
             }
         }
-
         return temp;
     }
 

@@ -5,16 +5,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class fileServer {
+    //server config
+    String SERVER_PATH = "server_shared";
+    int SERVER_PORT = 16789;
+    int MAX_THREAD = 20;
     public fileServer() throws IOException {
-        File dir = new File("server_shared");
-        ServerSocket serverSocket = new ServerSocket(16789);
-        ClientConnectionHandler[] threads = new ClientConnectionHandler[20];
         Socket clientSocket ;
+        File dir = new File(SERVER_PATH);
+        ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+        ClientConnectionHandler[] threads =
+                new ClientConnectionHandler[MAX_THREAD];
         int count = 1;
-
         while (true){
             clientSocket = serverSocket.accept();
-            System.out.println("Client "+count+" connected");
+            System.out.println("Connection "+count+" established");
             threads[count]=new ClientConnectionHandler(clientSocket,dir);
             threads[count].start();
             count++;
