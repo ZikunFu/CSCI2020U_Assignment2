@@ -77,7 +77,10 @@ public class Main extends Application {
                 }
             }
             if(exist){
-                System.err.println("file already exist");
+                Alert a = new Alert(Alert.AlertType.NONE);
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText(fileName + " already exists");
+                a.show();
             }
             else {
                 String content="";
@@ -91,7 +94,7 @@ public class Main extends Application {
                 try {
                     client(args.get(0),port,"UPLOAD "+fileName+" "+content);
                 }catch (Exception e){
-                    System.out.println("Error while uploading");
+                    System.err.println("Error while uploading");
                     System.err.println(e);
                 }
                 root.getChildren().add(new TreeItem<>(fileName));
@@ -103,7 +106,6 @@ public class Main extends Application {
             if(!list.getItems().contains(selected)){
                 List<String> data = client(args.get(0),port,"DOWNLOAD "+selected);
                 if(data!=null){
-                    updateList();
                     fileManager fm = new fileManager();
                     try {
                         fm.writeFile(path+selected, data.toString());
@@ -111,12 +113,18 @@ public class Main extends Application {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    updateList();
                 }
                 else {
                     System.out.println("Error, return from class client is null");
                 }
             }
-            else { System.out.println("Already exists"); }
+            else {
+                Alert a = new Alert(Alert.AlertType.NONE);
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText(selected + " already exists");
+                a.show();
+            }
 
         });
         view.setOnAction(actionEvent -> {
@@ -133,7 +141,10 @@ public class Main extends Application {
                 textArea.setText(content);
             }
             else if(tree.getSelectionModel().getSelectedItem().getValue()!=null){
-                System.err.println("Error: can only view file in local folder");
+                Alert a = new Alert(Alert.AlertType.NONE);
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Error: Can only view file in local folder");
+                a.show();
             }
         });
 
@@ -168,7 +179,7 @@ public class Main extends Application {
         }
 
         try{
-            if(arg.equals("DIR")){
+            if(arg.contains("DIR")){
                 System.out.println("DIR command passed to server");
                 String data = in.readLine();
                 System.out.println("received: " + data);
@@ -176,7 +187,7 @@ public class Main extends Application {
                         Arrays.asList(data.split(" "));
                 return temp;
             }
-            else if(arg.equals("UPLOAD")){
+            else if(arg.contains("UPLOAD")){
                 String filename=arg.split(" ")[1];
                 out.println("UPLOAD");
                 out.println(filename);
@@ -197,7 +208,8 @@ public class Main extends Application {
                 return temp;
             }
             else {
-                System.out.println("Error in args");
+                System.err.println("args is undefined");
+                System.err.println("arg: " + arg);
                 return null;
             }
         }catch (Exception e){
@@ -212,6 +224,7 @@ public class Main extends Application {
 
         String[] temp =
                 data.split(" ");
+        list.getItems().clear();
 
         for(String str : temp){
             list.getItems().add(str);

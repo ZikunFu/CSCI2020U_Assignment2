@@ -8,7 +8,7 @@ public class fileServer {
     public fileServer() throws IOException {
         File dir = new File("server_shared");
         ServerSocket serverSocket = new ServerSocket(16789);
-        ClientConnectionHandler[] threads = new ClientConnectionHandler[5];
+        ClientConnectionHandler[] threads = new ClientConnectionHandler[20];
         Socket clientSocket ;
         int count = 1;
 
