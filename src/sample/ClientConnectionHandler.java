@@ -30,7 +30,15 @@ class ClientConnectionHandler extends Thread {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-
+    /**
+     * this is the method that is executed by the thread.
+     * it receive the command from the client
+     * then split the command line for checking
+     * add default threadEnd false for disconnect
+     * while it is connected with client, it will react based on the command
+     * if it is not right
+     * then the error would pop up
+     */
     public void run() {
         String input = null, command, argument;
         try {

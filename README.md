@@ -2,8 +2,12 @@ a. Project information: \
 CSCI2020U Assignment 2\
 Member: Zikun Fu (100742730)\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chen Yang (100742300)\
+\
+a. Project Infomation:\
+&nbsp;&nbsp;&nbsp;&nbsp;our project can be used to operate the file system from sever to client, we could operate in our client to realize the exchange between sever and local\
+&nbsp;&nbsp;&nbsp;&nbsp;by clicking the buttons "UPDATE" ,"DOWNLOAD". Moreover, we add the view function which enable us to see the content of the file we want.\
 Screenshots of running application:\
-Scene1:\
+&nbsp;&nbsp;&nbsp;&nbsp;Scene1:\
 ![alt text](https://github.com/ZikunFu/CSCI2020U_Assignment1/blob/master/src/sample/resources/App_screenshot_1.png)
 
 b. Improvements: \
