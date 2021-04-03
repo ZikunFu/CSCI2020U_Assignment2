@@ -2,6 +2,7 @@ package sample;
 
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -13,6 +14,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
 
@@ -23,7 +25,7 @@ public class Main extends Application {
     ListView<String> list;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws InterruptedException {
         //loading resources
         Image img1 = new Image("sample/resources/upload.png",20,20,true,true);
         Image img2 = new Image("sample/resources/download.png",20,20,true,true);
@@ -89,7 +91,7 @@ public class Main extends Application {
                 File target = fm.findFile(fileName,new File(LOCAL_PATH));
 
                 //read file content
-                try { content = fm.readFile(target.getAbsolutePath()); }
+                try { content = fm.readPath(target.getAbsolutePath()); }
                 catch (FileNotFoundException e) { e.printStackTrace(); }
 
                 //uploading to server
@@ -139,7 +141,7 @@ public class Main extends Application {
                 String content="";
                 fileManager fm = new fileManager();
                 File target = fm.findFile(selected,new File(LOCAL_PATH));
-                try { content = fm.readFile(target.getAbsolutePath()); }
+                try { content = fm.readPath(target.getAbsolutePath()); }
                 catch (FileNotFoundException e) { e.printStackTrace(); }
                 textArea.setText(content);
             }
@@ -167,9 +169,9 @@ public class Main extends Application {
 
     //handling sending and receiving data with server
     private List<String> client(String ip, int port, String arg){
-        Socket socket;
-        BufferedReader in;
-        PrintWriter out;
+        Socket socket;      //socket
+        BufferedReader in;  //networkInput
+        PrintWriter out;    //networkOutput
 
         //Establish connection
         try {
@@ -211,8 +213,6 @@ public class Main extends Application {
 
             }else if(arg.contains("UPLOAD")){
                 System.out.println("Upload command passed to server");
-                //out.println("UPLOAD");
-                //out.println(arg.split(" ")[1]);
                 return null;
             }
             else {
@@ -241,11 +241,12 @@ public class Main extends Application {
     }
 
     //update TreeView by returning a new TreeView
-    private TreeItem<String> updateTree(){
+    private TreeItem<String> updateTree() throws InterruptedException {
         System.out.println("establishing connect");
         List<String> fileList = client(SERVER_IP,SERVER_PORT,"DIR");
         TreeItem<String> root = new TreeItem<>("Server root");
         root.setExpanded(true);
+        //Check networkInput
         if(fileList!=null){
             System.out.println("fileList received:");
             System.out.println(fileList.toString());
@@ -269,7 +270,17 @@ public class Main extends Application {
                 }
             }
         }
-        else { System.err.println("Error: Cannot get file List"); }
+
+        //Server down or no connection
+        else {
+            Alert a = new Alert(Alert.AlertType.NONE);
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Please start server before client. Program closing in 5 seconds");
+            a.show();
+            TimeUnit.SECONDS.sleep(5);
+            Platform.exit();
+            System.exit(0);
+        }
         return root;
     }
 

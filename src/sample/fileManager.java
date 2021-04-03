@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class fileManager {
     fileManager(){}
 
-    public String readFile(String path) throws FileNotFoundException {
+    public String readPath(String path) throws FileNotFoundException {
         File file = new File(path);
         Scanner fileReader = new Scanner(file);
         StringBuilder data = new StringBuilder();
@@ -19,6 +19,16 @@ public class fileManager {
         fileReader.close();
         return data.toString();
     }
+    public String readFile(File file) throws FileNotFoundException {
+        Scanner fileReader = new Scanner(file);
+        StringBuilder data = new StringBuilder();
+        while (fileReader.hasNextLine()) {
+            data.append(fileReader.nextLine());
+        }
+        fileReader.close();
+        return data.toString();
+    }
+
     public void writeFile(String path,String data) throws IOException {
         FileWriter fileWriter = new FileWriter(path);
         fileWriter.append(data);
@@ -28,6 +38,11 @@ public class fileManager {
     public File findFile(String fileName, File dir){
         for (File file : dir.listFiles()) {
             if(file.getName().equals(fileName)){ return file; }
+            else if(file.isDirectory()){
+                for(File file1 : file.listFiles()){
+                    if(file1.getName().equals(fileName)){ return file1; }
+                }
+            }
         }
         return null;
     }

@@ -6,26 +6,25 @@ Screenshots of running application:\
 Scene1:\
 ![alt text](https://github.com/ZikunFu/CSCI2020U_Assignment1/blob/master/src/sample/resources/App_screenshot_1.png)
 
-Scene2:\
-![alt text](https://github.com/ZikunFu/CSCI2020U_Assignment1/blob/master/src/sample/resources/App_screenshot_2.png)
-
 b. Improvements: \
-&nbsp;&nbsp;&nbsp;&nbsp;1.Directory Chooser for folder selection.\
-&nbsp;&nbsp;&nbsp;&nbsp;2.CSS for multiple UI elements.\
-&nbsp;&nbsp;&nbsp;&nbsp;3.Export, open file, and open directory functionalities.\
-&nbsp;&nbsp;&nbsp;&nbsp;4.File name inside tableview\
-&nbsp;&nbsp;&nbsp;&nbsp;5.Multiple scenes traverse buttons.\
-&nbsp;&nbsp;&nbsp;&nbsp;6.Button Icons.
+&nbsp;&nbsp;&nbsp;&nbsp;1.TextArea and View File function.\
+&nbsp;&nbsp;&nbsp;&nbsp;2.TreeView for multiple directories viewing at Server shared folder.\
+&nbsp;&nbsp;&nbsp;&nbsp;3.Button Icons.\
+&nbsp;&nbsp;&nbsp;&nbsp;4.Alerts for incorrect user input.
 
 c. How to run: \
 &nbsp;&nbsp;&nbsp;&nbsp;1.Install java jdk-14 or higher version.\
 &nbsp;&nbsp;&nbsp;&nbsp;2.Include javafx-sdk-15.0.1 as library.\
 &nbsp;&nbsp;&nbsp;&nbsp;3.Note: Launching from IDE need to add VM arguments:\
 &nbsp;&nbsp;&nbsp;&nbsp;"--module-path /path/to/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml"\
-&nbsp;&nbsp;&nbsp;&nbsp;4.Launch Main.java.\
-&nbsp;&nbsp;&nbsp;&nbsp;5.Use "Browse" to select Directory "data/test/ham" or "data/test/spam".
+&nbsp;&nbsp;&nbsp;&nbsp;4.Set command line arguments (default: "127.0.0.1 local_shared/")\
+&nbsp;&nbsp;&nbsp;&nbsp;Note: default port is 16789, default MaxThread is 20, default SERVER_PATH is "server_shared"\
+&nbsp;&nbsp;&nbsp;&nbsp;default LOCAL_PATH is "local_shared"\
+&nbsp;&nbsp;&nbsp;&nbsp;5.IMPORTANT: Always launch fileServer.java before Main.java\
+&nbsp;&nbsp;&nbsp;&nbsp;6.Launch Main.java.\
+&nbsp;&nbsp;&nbsp;&nbsp;7.Testing files are already created in local_shared and server_shared folders.\
+
 
 d. Other resources: \
-&nbsp;&nbsp;&nbsp;&nbsp;1.WordCounter.java provided by professor Mariana Shimabukuro in canvas.\
+&nbsp;&nbsp;&nbsp;&nbsp;1.ChatServer provided by professor Mariana Shimabukuro in canvas.\
 &nbsp;&nbsp;&nbsp;&nbsp;2.Button Icons from free opensource website "flaticon.com"\
-&nbsp;&nbsp;&nbsp;&nbsp;3.Apple button CSS from "https://www.apple.com/ca/".
