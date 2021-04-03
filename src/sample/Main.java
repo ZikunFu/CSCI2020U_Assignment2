@@ -16,6 +16,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**Creating the UI for clients
+ * make this could connect to the server
+ * set the buttons the their own actions
+ * for realizing the functions "DOWNLOAD" "UPDATE" "VIEW"
+ * "Download" button can make the files transmit from server to client
+ * "Update" button could make the file transport to the server
+ * "View" can check the content in the files
+ * The method is used to build the UI Scene of the client.
+ */
+
 public class Main extends Application {
 
     //initializing global variables
@@ -186,7 +196,18 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    //handling sending and receiving data with server
+    /**
+     * this method is used to handle sending and receiving data with server
+     * it make the connection with the server first
+     * and then read the received argument from the server
+     * and it will check if it fits the conditions "DIR" "DOWNLOAD" "UPLOAD"
+     * then it will reflect the right action
+     *
+     * @param ip an String that contains the ip address
+     * @param port the int that the port of the ip address
+     * @param arg the argument that need identify "Download" "update" "DIR"
+     * @return String fileList into list of strings
+     */
     private List<String> client(String ip, int port, String arg){
         Socket socket;      //socket
         BufferedReader in;  //networkInput
@@ -244,7 +265,12 @@ public class Main extends Application {
             return null;
         }
     }
-    //Update listView by reading all files in local folder and replace a new treeView
+    /**
+     * this method will update the listview bt reading all files in the local folder
+     * it will read the local folder
+     * then put them in a filename list
+     * ending up with updating the list
+     */
     private void updateList(){
         fileManager fm = new fileManager();
         //reading local folder
@@ -260,6 +286,18 @@ public class Main extends Application {
     }
 
     //update TreeView by returning a new TreeView
+
+    /**
+     *this method is used to update the new tree-view
+     *it will check all the files as order
+     * if it meet a "@" in front of the file
+     * it would be recognized as folder
+     * then it will get in the folder and add the new files inside first
+     * then come back to the last node after the "@"
+     *
+     * @return a new tree view
+     * @throws InterruptedException
+     */
     private TreeItem<String> updateTree() throws InterruptedException {
         System.out.println("establishing connect");
         List<String> fileList = client(SERVER_IP,SERVER_PORT,"DIR");

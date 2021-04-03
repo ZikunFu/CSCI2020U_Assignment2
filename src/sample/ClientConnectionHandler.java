@@ -3,12 +3,25 @@ package sample;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * this is the class to initialize the single thread
+ * it will be used to handle the functions of the single server
+ * it will recognized the action command from client
+ * and reflect the proper action such as "INSTALL" "UPDATE" "DIR"
+ */
 class ClientConnectionHandler extends Thread {
     Socket clientSocket;//Socket
     BufferedReader in;  //networkInput
     PrintWriter out;    //networkOutput
     File directory;     //server folder
 
+    /**
+     * this method is used to initialize single thread functions
+     * its features including read, import, export files
+     * @param socket the socket of the client
+     * @param dir the file of the directory
+     * @throws IOException
+     */
     public ClientConnectionHandler(Socket socket, File dir) throws IOException {
         super();
         clientSocket = socket;
@@ -17,6 +30,13 @@ class ClientConnectionHandler extends Thread {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
+    /**
+     * this is the method to show the message running the server
+     * it will receive the message to "input"
+     * and then it will split the input for checking command
+     * then the server should not be off if the input exists
+     * at last to give the action message after checking the message
+     */
     public void run() {
         String input = null, command, argument;
         try {
@@ -56,6 +76,18 @@ class ClientConnectionHandler extends Thread {
         else { System.err.println("Error: Command is null"); }
     }
 
+    /**
+     * this method is used to reflect the command
+     * which is sent by the client
+     * for "DIR" it will show the files that from the directory
+     * for "Download" it will send the files mentioned in command to client
+     * for "upload" server will receive the file mentioned in command from client
+     * then the thread will end
+     * @param command the string that describe the command like "download" "upload" "dir"
+     * @param argument the string describe the file name
+     * @return boolean true
+     * @throws IOException
+     */
     private boolean serverAction(String command, String argument) throws IOException {
         fileManager fm = new fileManager();
         //Checking for types of command
