@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class fileManager {
     fileManager(){}
 
-    public String readFile(String path) throws FileNotFoundException {
+    static public String readFile(String path) throws FileNotFoundException {
         File file = new File(path);
         Scanner fileReader = new Scanner(file);
         StringBuilder data = new StringBuilder();
