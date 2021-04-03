@@ -121,14 +121,18 @@ public class Main extends Application {
                 if(data!=null){
                     fileManager fm = new fileManager();
                     try {
-                        fm.writeFile(LOCAL_PATH+selected, data.toString());
-                        textArea.setText(data.toString());
+                        String content="";
+                        for(String str : data){
+                            content += str+" ";
+                        }
+                        fm.writeFile(LOCAL_PATH+selected, content);
+                        textArea.setText(content);
                     } catch (IOException e) { e.printStackTrace(); }
                     //update local listview
                     updateList();
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Download from server");
-                    a.setContentText(selected+ " downloaded to "+LOCAL_PATH);
+                    a.setContentText(selected+ " downloaded to <"+LOCAL_PATH+">");
                     a.show();
                 }
                 else {
