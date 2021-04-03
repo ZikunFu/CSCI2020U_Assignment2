@@ -81,6 +81,7 @@ public class Main extends Application {
             if(exist){
                 Alert a = new Alert(Alert.AlertType.NONE);
                 a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setTitle("Upload to server");
                 a.setContentText(fileName + " already exists");
                 a.show();
             }
@@ -100,6 +101,10 @@ public class Main extends Application {
                     System.err.println("Error while uploading");
                 }
                 root.getChildren().add(new TreeItem<>(fileName));
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setTitle("Upload to server");
+                a.setContentText(fileName+ " uploaded to server");
+                a.show();
             }
 
         });
@@ -107,7 +112,6 @@ public class Main extends Application {
             //getting filename from selected tree
             String selected = tree.getSelectionModel()
                     .getSelectedItem().getValue();
-
 
             if(!list.getItems().contains(selected)){
                 //sending download command and read networkInput
@@ -122,12 +126,23 @@ public class Main extends Application {
                     } catch (IOException e) { e.printStackTrace(); }
                     //update local listview
                     updateList();
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setTitle("Download from server");
+                    a.setContentText(selected+ " downloaded to "+LOCAL_PATH);
+                    a.show();
                 }
-                else { System.err.println("Error: return from client is null"); }
+                else {
+                    Alert a = new Alert(Alert.AlertType.NONE);
+                    a.setAlertType(Alert.AlertType.INFORMATION);
+                    a.setTitle("Download from server");
+                    a.setContentText("Directory is selected");
+                    a.show();
+                }
             }
             else {
                 Alert a = new Alert(Alert.AlertType.NONE);
                 a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setTitle("Download from server");
                 a.setContentText(selected + " already exists");
                 a.show();
             }
@@ -273,8 +288,8 @@ public class Main extends Application {
 
         //Server down or no connection
         else {
-            Alert a = new Alert(Alert.AlertType.NONE);
-            a.setAlertType(Alert.AlertType.ERROR);
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Error: Cannot connect to server");
             a.setContentText("Please start server before client. Program closing in 5 seconds");
             a.show();
             TimeUnit.SECONDS.sleep(5);

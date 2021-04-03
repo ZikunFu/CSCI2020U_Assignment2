@@ -71,12 +71,20 @@ class ClientConnectionHandler extends Thread {
 
                 //find file in server folder
                 File file = fm.findFile(argument, directory);
-                System.out.println("path found: <" + file.getAbsolutePath()+">");
-                String data = fm.readFile(file);
 
-                //passing data to client via networkOutput
-                out.println(data);
-                System.out.println("content of file: <" + data+">");
+                //Check if directory is incorrectly passed by client
+                if(file==null||file.isDirectory()){
+                    return true;
+                }
+                else {
+                    System.out.println("path found: <" + file.getAbsolutePath()+">");
+                    String data = fm.readFile(file);
+
+                    //passing data to client via networkOutput
+                    out.println(data);
+                    System.out.println("content of file: <" + data+">");
+                }
+
             }
             case "UPLOAD" -> {
                 System.out.println("UPLOAD command received");
