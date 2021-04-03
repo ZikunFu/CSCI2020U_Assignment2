@@ -16,8 +16,7 @@ class ClientConnectionHandler extends Thread {
     File directory;     //server folder
 
     /**
-     * this method is used to initialize single a thread
-     * its features including read, import, export files
+     * this Constructor is used to initialize the class
      * @param socket the socket of the client
      * @param dir the file of the directory
      * @throws IOException
@@ -31,13 +30,8 @@ class ClientConnectionHandler extends Thread {
     }
 
     /**
-     * this is the method that is executed by the thread.
-     * it receive the command from the client
-     * then split the command line for checking
-     * add default threadEnd false for disconnect
-     * while it is connected with client, it will react based on the command
-     * if it is not right
-     * then the error would pop up
+     * run method receive commands from the client
+     * then call serverAction to handle the command
      */
     public void run() {
         String input = null, command, argument;
