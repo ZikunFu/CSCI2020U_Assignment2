@@ -9,9 +9,9 @@ import java.net.Socket;
  */
 public class fileServer {
     //server config
-    String SERVER_PATH = "server_shared";
-    int SERVER_PORT = 16789;
-    int MAX_THREAD = 20;
+    protected String SERVER_PATH = "server_shared";
+    protected int SERVER_PORT = 16789;
+    protected int MAX_THREAD = 20;
 
     /**
      * this method is used to establish multiple threads

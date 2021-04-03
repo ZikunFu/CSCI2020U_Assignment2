@@ -10,10 +10,10 @@ import java.net.Socket;
  * and react with proper actions such as "INSTALL" "UPDATE" "DIR"
  */
 class ClientConnectionHandler extends Thread {
-    Socket clientSocket;//Socket
-    BufferedReader in;  //networkInput
-    PrintWriter out;    //networkOutput
-    File directory;     //server folder
+    protected Socket clientSocket;//Socket
+    protected BufferedReader in;  //networkInput
+    protected PrintWriter out;    //networkOutput
+    protected File directory;     //server folder
 
     /**
      * this Constructor is used to initialize the class
@@ -85,7 +85,7 @@ class ClientConnectionHandler extends Thread {
      * @return boolean true
      * @throws IOException
      */
-    private boolean serverAction(String command, String argument) throws IOException {
+    protected boolean serverAction(String command, String argument) throws IOException {
         fileManager fm = new fileManager();
         //Checking for types of command
         switch (command) {
