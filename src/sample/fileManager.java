@@ -52,8 +52,7 @@ public class fileManager {
     }
 
     /**
-     * this method is used to fulfill "download" "update"
-     * used last two methods which return data and then write to the new path
+     * this method is used to store a file
      * @param path the destination path
      * @param data the content about to deliver
      * @throws IOException
@@ -68,7 +67,7 @@ public class fileManager {
     /**
      * this method is used to find the file that is targeted
      * used for-loop in files
-     * when the name is matched, then return the file out
+     * when the name is matched, then return the file
      * @param fileName the target file's name
      * @param dir directory of files
      * @return file we want
@@ -86,7 +85,7 @@ public class fileManager {
     }
 
     /**
-     * this method is used to make a file system to file list
+     * this method is used to return a list of files given a directory
      * @param dir directory of files
      * @return the list of the files
      */

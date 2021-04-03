@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 /**Creating the UI for clients
  * make this could connect to the server
- * set the buttons the their own actions
- * for realizing the functions "DOWNLOAD" "UPDATE" "VIEW"
- * "Download" button can make the files transmit from server to client
- * "Update" button could make the file transport to the server
- * "View" can check the content in the files
- * The method is used to build the UI Scene of the client.
+ * set the buttons actions
+ * for realizing functions "DOWNLOAD" "UPDATE" "VIEW"
+ * "Download" button transmits files from server to the client
+ * "Update" button transports files to the server
+ * "View" can check the content in files
+ * The method is used to build the Scene of the client.
  */
 
 public class Main extends Application {
@@ -198,10 +198,10 @@ public class Main extends Application {
 
     /**
      * this method is used to handle sending and receiving data with server
-     * it make the connection with the server first
-     * and then read the received argument from the server
+     * first it makes connection with the server
+     * and then reads the received argument from the server
      * and it will check if it fits the conditions "DIR" "DOWNLOAD" "UPLOAD"
-     * then it will reflect the right action
+     * then it reacts with the right action
      *
      * @param ip an String that contains the ip address
      * @param port the int that the port of the ip address
@@ -266,7 +266,7 @@ public class Main extends Application {
         }
     }
     /**
-     * this method will update the listview bt reading all files in the local folder
+     * this method will update the listview by reading all files in the local folder
      * it will read the local folder
      * then put them in a filename list
      * ending up with updating the list
@@ -291,8 +291,8 @@ public class Main extends Application {
      *this method is used to update the new tree-view
      *it will check all the files as order
      * if it meet a "@" in front of the file
-     * it would be recognized as folder
-     * then it will get in the folder and add the new files inside first
+     * it would be recognized as a sub directory
+     * then it will enter the sub directory and add the new files inside first
      * then come back to the last node after the "@"
      *
      * @return a new tree view

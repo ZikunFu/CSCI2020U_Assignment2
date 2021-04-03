@@ -14,10 +14,7 @@ public class fileServer {
     int MAX_THREAD = 20;
 
     /**
-     * this method is used to connect with client
-     * and it is used to realize multi-thread
-     * by making "[]"
-     * which can have many servers simultaneously
+     * this method is used to establish multiple threads
      * @throws IOException
      */
     public fileServer() throws IOException {
